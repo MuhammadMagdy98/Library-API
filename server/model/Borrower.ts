@@ -1,11 +1,11 @@
 import { Model, DataTypes } from "sequelize";
-import sequelize from "../config/db"; // Adjust the import path as needed
+import sequelize from "../config/db";
 
 class Borrower extends Model {
   public id!: number;
   public name!: string;
   public email!: string;
-  public registeredDate!: Date;
+  public role!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -27,9 +27,10 @@ Borrower.init(
       allowNull: false,
       unique: true,
     },
-    registeredDate: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "user",
     },
   },
   {

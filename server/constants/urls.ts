@@ -1,4 +1,4 @@
-const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
+const BASE_URL = process.env.BASE_URL || "";
 const API_VERSION = "v1";
 
 export const API_URLS = {

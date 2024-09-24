@@ -3,6 +3,7 @@
     "start": "npx tsc && node build/server/index.js"
   },
   "dependencies": {
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/sequelize": "^4.28.20",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",

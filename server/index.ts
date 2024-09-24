@@ -5,11 +5,17 @@ import logger from "./config/logger";
 import Book from "./model/Book";
 import Borrower from "./model/Borrower";
 import BorrowingProcess from "./model/BorrowingProcess";
+import initializeAdminEmails from "./config/init.admin";
+import borrowRoutes from "./routes/borrow.routes";
+import { errorConverter, errorHandler } from "./middlewares/error";
 const app = express();
 
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
+
+app.use(borrowRoutes);
+
 
 const startServer = async () => {
   try {
@@ -17,6 +23,7 @@ const startServer = async () => {
     await Book.sync();
     await Borrower.sync();
     await BorrowingProcess.sync();
+    await initializeAdminEmails();
     const PORT = env.PORT;
     app.listen(PORT, () => {
       logger.info(`Server is running on port ${PORT}`);
@@ -27,3 +34,8 @@ const startServer = async () => {
 };
 
 startServer();
+
+app.use(errorConverter);
+
+app.use(errorHandler);
+
