@@ -11,6 +11,7 @@ interface EnvConfig {
     DB_PASSWORD: string;
     DB_NAME: string;
     DB_PORT: number;
+    ADMIN_EMAILS: Set<string>;
 }
 
 // Define an object that exports the environment variables with type safety
@@ -22,8 +23,10 @@ const config: EnvConfig = {
     DB_USERNAME: process.env.DB_USERNAME || '',
     DB_PASSWORD: process.env.DB_PASSWORD || '',
     DB_NAME: process.env.DB_NAME || '',
-    DB_PORT: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 5432
+    DB_PORT: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 5432,
+    ADMIN_EMAILS: process.env.ADMIN_EMAILS ? new Set(process.env.ADMIN_EMAILS.split(','))  : new Set()
   };
+  console.log(config);
   if (!config.DB_URL) {
     throw new Error('Missing DATABASE_URL environment variable.');
   }
