@@ -1,7 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../config/db"; // Adjust the import path as needed
 import Book from "./Book";
-import Borrower from "./Borrower";
+import User from "./User";
 
 class BorrowingProcess extends Model {
   public id!: number;
@@ -25,7 +25,7 @@ BorrowingProcess.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: Borrower,
+        model: User,
         key: "id",
       },
     },
@@ -52,10 +52,9 @@ BorrowingProcess.init(
   }
 );
 
-// Define relationships
 Book.hasMany(BorrowingProcess, { foreignKey: "bookId" });
-Borrower.hasMany(BorrowingProcess, { foreignKey: "borrowerId" });
+User.hasMany(BorrowingProcess, { foreignKey: "userId" });
 BorrowingProcess.belongsTo(Book, { foreignKey: "bookId" });
-BorrowingProcess.belongsTo(Borrower, { foreignKey: "borrowerId" });
+BorrowingProcess.belongsTo(User, { foreignKey: "userId" });
 
 export default BorrowingProcess;

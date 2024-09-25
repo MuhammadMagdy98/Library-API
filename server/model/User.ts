@@ -1,17 +1,17 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../config/db";
 
-class Borrower extends Model {
+class User extends Model {
   public id!: number;
   public name!: string;
   public email!: string;
+  public password!: string;
   public role!: string;
-
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
-Borrower.init(
+User.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -27,6 +27,10 @@ Borrower.init(
       allowNull: false,
       unique: true,
     },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     role: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -35,8 +39,8 @@ Borrower.init(
   },
   {
     sequelize,
-    tableName: "borrowers",
+    tableName: "users",
   }
 );
 
-export default Borrower;
+export default User;

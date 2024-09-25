@@ -4,6 +4,7 @@ import sequelize from "sequelize";
 import ApiError from "../utils/ApiError";
 import logger from "../config/logger";
 import env from "../config/env";
+import { JsonWebTokenError } from "jsonwebtoken";
 
 export const errorConverter = (
   err: any,
@@ -14,13 +15,18 @@ export const errorConverter = (
   let error = err;
   logger.info(err);
   if (!(error instanceof ApiError)) {
-    const statusCode =
-      error.statusCode ||
-      (error instanceof sequelize.Error
-        ? HttpStatusCodes.BAD_REQUEST
-        : HttpStatusCodes.INTERNAL_SERVER_ERROR);
-    const message = error.message || statusCode;
-    error = new ApiError(statusCode, message, false, err.stack);
+    if (error instanceof sequelize.UniqueConstraintError) {
+      const fieldName = error.errors?.[0]?.path || "field";
+      const errorMessage = `${fieldName} already exists`;
+      error = new ApiError(HttpStatusCodes.CONFLICT, errorMessage);
+    } else if (error instanceof JsonWebTokenError) {
+      error = new ApiError(HttpStatusCodes.FORBIDDEN, "Invalid token");
+    } else {
+      error = new ApiError(
+        HttpStatusCodes.INTERNAL_SERVER_ERROR,
+        "Interval server error"
+      );
+    }
   }
   next(error);
 };
@@ -44,8 +50,6 @@ export const errorHandler = (
     code: statusCode,
     message,
   };
-
-  logger.error(err);
 
   res.status(statusCode).send(response);
 };
