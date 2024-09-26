@@ -42,8 +42,6 @@ export const updateBookService = async (
   }
   // Remove id from the updateDetails to prevent it from being updated
   const { id, ...updateData } = updateDetails;
-  // updateData.updatedAt = new Date();
-  console.log(updateData);
   const updatedBook = await book.update(updateDetails);
 
   return updatedBook;

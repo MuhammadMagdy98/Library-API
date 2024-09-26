@@ -8,8 +8,6 @@ import Book from "../model/Book";
 export const getBorrowingAnalyticsService = async (
   analytics: AnalyticsAttributes
 ) => {
-  let borrowings: any = [];
-
   const includeOptions = [
     {
       model: User,
@@ -20,44 +18,38 @@ export const getBorrowingAnalyticsService = async (
       attributes: ["title", "author"],
     },
   ];
-  // if no dates are provided return all
-  if (!analytics.startDate && !analytics.startDate) {
-    borrowings = await BorrowingProcess.findAll({ include: includeOptions });
-    return borrowings;
+
+  const today = new Date();
+
+  if (analytics.endDate) {
+    if (
+      analytics.endDate.toDateString() === today.toDateString() // Check if endDate is today
+    ) {
+      analytics.endDate = today; // Set endDate to the current time
+    } else {
+      analytics.endDate.setHours(23, 59, 59, 999); // Make endDate the end of the day
+    }
   }
-  // end date exists but not start date, get all before endDate
-  else if (!analytics.startDate) {
-    borrowings = await BorrowingProcess.findAll({
-      where: {
-        createdAt: {
-          [Op.lte]: analytics.endDate,
-        },
-        include: includeOptions,
-      },
-    });
+  if (analytics.startDate) {
+    analytics.startDate.setHours(0, 0, 0, 0); // Make startDate the start of the day
   }
-  // start date exists but not end date, get all after startDate
-  else if (!analytics.endDate) {
-    borrowings = await BorrowingProcess.findAll({
-      where: {
-        createdAt: {
-          [Op.gte]: analytics.startDate,
-        },
-        include: includeOptions,
-      },
-    });
+
+  let whereCondition: any = {};
+  // Build where condition based on the provided dates
+  if (analytics.startDate && analytics.endDate) {
+    whereCondition.createdAt = {
+      [Op.between]: [analytics.startDate, analytics.endDate],
+    };
+  } else if (analytics.startDate) {
+    whereCondition.createdAt = { [Op.gte]: analytics.startDate };
+  } else if (analytics.endDate) {
+    whereCondition.createdAt = { [Op.lte]: analytics.endDate };
   }
-  // find all in between
-  else {
-    borrowings = await BorrowingProcess.findAll({
-      where: {
-        createdAt: {
-          [Op.between]: [analytics?.startDate, analytics?.endDate],
-        },
-        include: includeOptions,
-      },
-    });
-  }
+
+  const borrowings = await BorrowingProcess.findAll({
+    where: Object.keys(whereCondition).length ? whereCondition : undefined,
+    include: includeOptions,
+  });
 
   if (!borrowings.length) {
     throw new ApiError(
