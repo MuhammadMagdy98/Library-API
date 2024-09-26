@@ -31,3 +31,8 @@ export interface BorrowingProccessAttributes {
   borrowerId: number;
   dueDate: Date;
 }
+
+export interface AnalyticsAttributes {
+  startDate: Date;
+  endDate: Date;
+}

@@ -22,8 +22,8 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(API_URLS.GET_BOOKS, createRateLimiter(60 * 1000, 10));
-app.use(API_URLS.SEARCH_BOOKS, createRateLimiter(FIFTEEN_MINUTES, 10));
+app.use(API_URLS.GET_BOOKS, createRateLimiter(FIFTEEN_MINUTES, MAX_REQUESTS));
+app.use(API_URLS.SEARCH_BOOKS, createRateLimiter(FIFTEEN_MINUTES, MAX_REQUESTS));
 app.use(borrowRoutes);
 app.use(authRoutes);
 app.use(bookRoutes);

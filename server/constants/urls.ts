@@ -16,6 +16,7 @@ export const API_URLS = {
   CHECK_BOOK: `${BASE_URL}/api/${API_VERSION}/borrowers/check`,
   RETURN_BOOK: `${BASE_URL}/api/${API_VERSION}/borrowers/return`,
   GET_OVERTIME: `${BASE_URL}/api/${API_VERSION}/borrowers/overtime`,
+  ANALYTICS_REPORT_EXPORT: `${BASE_URL}/api/${API_VERSION}/analytics/export`,
 };
 
 export default API_URLS;
