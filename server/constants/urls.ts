@@ -1,5 +1,5 @@
 const API_VERSION = "v1";
-const BASE_URL = `api/${API_VERSION}`;
+const BASE_URL = `/api/${API_VERSION}`;
 
 
 export const API_URLS = {
