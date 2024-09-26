@@ -21,7 +21,7 @@ export const searchBookSchema = Joi.object({
   title: Joi.string().min(1).max(100),
   author: Joi.string().min(1).max(100),
   isbn: Joi.string().alphanum().length(13),
-});
+}).min(1);
 
 export const deleteBookSchema = Joi.object({
   id: Joi.number().integer().required(),

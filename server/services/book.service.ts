@@ -47,13 +47,15 @@ export const updateBookService = async (
   return updatedBook;
 };
 
-export const searchBooksService = async (query: string) => {
+export const searchBooksService = async (
+  searchDetails: Partial<BookAttributes>
+) => {
   const books = await Book.findAll({
     where: {
       [Op.or]: [
-        { title: { [Op.iLike]: `%${query}%` } }, // Case-insensitive partial match
-        { author: { [Op.iLike]: `%${query}%` } },
-        { isbn: { [Op.iLike]: `%${query}%` } },
+        { title: { [Op.iLike]: `%${searchDetails.title}%` } }, // Case-insensitive partial match
+        { author: { [Op.iLike]: `%${searchDetails.author}%` } },
+        { isbn: { [Op.iLike]: `%${searchDetails.isbn}%` } },
       ],
     },
   });

@@ -5,6 +5,7 @@ import { validate } from "../middlewares/validate";
 import {
   addBookSchema,
   deleteBookSchema,
+  searchBookSchema,
   updateBookSchema,
 } from "../validations/book.validation";
 import {
@@ -41,6 +42,6 @@ router.delete(
 
 router.get(API_URLS.GET_BOOKS, adminAuth, getAllBooksController);
 
-router.get(API_URLS.SEARCH_BOOKS, adminAuth, searchBooksController); 
+router.get(API_URLS.SEARCH_BOOKS, adminAuth, validate(searchBookSchema), searchBooksController); 
 
 export default router;

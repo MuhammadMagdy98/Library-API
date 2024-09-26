@@ -44,15 +44,7 @@ export const getAllBooksController = catchAsync(
 
 export const searchBooksController = catchAsync(
   async (req: Request, res: Response) => {
-    const { query } = req.query; // Extract search query from request
-
-    if (!query) {
-      return res.status(HttpStatusCodes.BAD_REQUEST).json({
-        message: "Search query is required",
-      });
-    }
-
-    const books = await searchBooksService(query as string); // Call the search service
+    const books = await searchBooksService(req.query);
 
     res.status(HttpStatusCodes.OK).json({
       message: "Books found",

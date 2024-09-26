@@ -7,6 +7,9 @@ export const validate =
     let { error } = schema.validate(req.body);
     if (req.params?.id) {
       error = schema.validate(req.params).error;
+    } else if (req.query?.title || req.query?.author || req.query?.isbn) {
+      // that should be search book
+      error = schema.validate(req.query).error;
     }
     if (error) {
       return res
