@@ -15,3 +15,11 @@ export interface UpdateBorrowerAttributes {
   name?: string;
   password?: string;
 }
+
+export interface BookAttributes {
+  title: string;
+  author: string;
+  isbn: string;
+  availableQuantity?: number; // optional, since it defaults to 1
+  shelfLocation: string;
+}
