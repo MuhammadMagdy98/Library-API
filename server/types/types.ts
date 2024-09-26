@@ -33,6 +33,6 @@ export interface BorrowingProccessAttributes {
 }
 
 export interface AnalyticsAttributes {
-  startDate: Date;
-  endDate: Date;
+  startDate?: Date;
+  endDate?: Date;
 }

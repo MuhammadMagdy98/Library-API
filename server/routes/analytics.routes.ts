@@ -12,3 +12,6 @@ router.get(
   validateDateRange,
   exportBorrowingsToCSVController
 );
+
+
+export default router;

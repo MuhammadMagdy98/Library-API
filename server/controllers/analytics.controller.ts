@@ -1,30 +1,39 @@
 import catchAsync from "../utils/catchAsync";
 import { Request, Response } from "express";
-import HttpStatusCodes from "http-status-codes";
-import path from "path";
-import {
-  getBorrowingAnalyticsService,
-  exportBorrowingsToCSVService,
-} from "../services/analytics.service";
+import * as csv from "fast-csv";
+import { getBorrowingAnalyticsService } from "../services/analytics.service";
+import logger from "../config/logger";
 export const exportBorrowingsToCSVController = catchAsync(
   async (req: Request, res: Response) => {
     const { startDate, endDate } = req.query;
 
-    if (!startDate || !endDate) {
-      return res
-        .status(HttpStatusCodes.BAD_REQUEST)
-        .json({ message: "Start date and end date are required" });
-    }
-
     const borrowings = await getBorrowingAnalyticsService({
-      startDate: new Date(startDate as string),
-      endDate: new Date(endDate as string),
+      startDate: !startDate ? undefined : new Date(startDate as string),
+      endDate: !endDate ? undefined : new Date(endDate as string),
     });
 
-    const filePath = path.join(__dirname, "..", "exports", "borrowings.csv");
+    res.setHeader(
+      "Content-Disposition",
+      'attachment; filename="borrowings.csv"'
+    );
+    res.setHeader("Content-Type", "text/csv");
+    const csvStream = csv.format({ headers: true });
+    csvStream.pipe(res);
 
-    await exportBorrowingsToCSVService(borrowings, filePath);
+    borrowings.forEach((borrowing: any) => {
+      csvStream.write({
+        id: borrowing.id,
+        "Borrower Name": borrowing.User.name,
+        "Borrower Email": borrowing.User.email,
+        "Book Title": borrowing.Book.title,
+        "Book Author": borrowing.Book.author,
+        "Borrowing Date": borrowing.createdAt,
+        "Return Date": borrowing.returnedAt,
+      });
+    });
 
-    res.download(filePath, "borrowings.csv");
+    csvStream.end();
+
+    logger.info("CSV file sent successfully");
   }
 );

@@ -11,6 +11,7 @@ import borrowRoutes from "./routes/borrow.routes";
 import authRoutes from "./routes/auth.routes";
 import bookRoutes from "./routes/book.routes";
 import borrowingRoutes from "./routes/borrowing.routes";
+import analyticsRoutes from "./routes/analytics.routes";
 import { errorConverter, errorHandler } from "./middlewares/error";
 import InitializationFlag from "./model/InitializationFlag";
 import API_URLS from "./constants/urls";
@@ -23,11 +24,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(API_URLS.GET_BOOKS, createRateLimiter(FIFTEEN_MINUTES, MAX_REQUESTS));
-app.use(API_URLS.SEARCH_BOOKS, createRateLimiter(FIFTEEN_MINUTES, MAX_REQUESTS));
+app.use(
+  API_URLS.SEARCH_BOOKS,
+  createRateLimiter(FIFTEEN_MINUTES, MAX_REQUESTS)
+);
 app.use(borrowRoutes);
 app.use(authRoutes);
 app.use(bookRoutes);
 app.use(borrowingRoutes);
+app.use(analyticsRoutes);
 
 const startServer = async () => {
   try {
