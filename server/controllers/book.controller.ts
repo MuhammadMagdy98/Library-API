@@ -4,15 +4,29 @@ import {
   addBookService,
   getAllBooksService,
   deleteBookService,
+  updateBookService,
+  searchBooksService,
 } from "../services/book.service";
+import HttpStatusCodes from "http-status-codes";
 
 export const addBookController = catchAsync(
   async (req: Request, res: Response) => {
     const book = await addBookService(req.body);
 
-    res.status(201).json({
+    res.status(HttpStatusCodes.CREATED).json({
       message: "Book added successfully",
       data: book,
+    });
+  }
+);
+
+export const updateBookController = catchAsync(
+  async (req: Request, res: Response) => {
+    const updatedBook = await updateBookService(req.body);
+
+    res.status(HttpStatusCodes.OK).json({
+      message: "Book updated successfully",
+      data: updatedBook,
     });
   }
 );
@@ -21,8 +35,27 @@ export const getAllBooksController = catchAsync(
   async (req: Request, res: Response) => {
     const books = await getAllBooksService();
 
-    res.status(200).json({
+    res.status(HttpStatusCodes.OK).json({
       message: "List of books retrieved successfully",
+      data: books,
+    });
+  }
+);
+
+export const searchBooksController = catchAsync(
+  async (req: Request, res: Response) => {
+    const { query } = req.query; // Extract search query from request
+
+    if (!query) {
+      return res.status(HttpStatusCodes.BAD_REQUEST).json({
+        message: "Search query is required",
+      });
+    }
+
+    const books = await searchBooksService(query as string); // Call the search service
+
+    res.status(HttpStatusCodes.OK).json({
+      message: "Books found",
       data: books,
     });
   }
@@ -31,6 +64,8 @@ export const getAllBooksController = catchAsync(
 export const deleteBookController = catchAsync(
   async (req: Request, res: Response) => {
     await deleteBookService(Number(req.params.id));
-    res.status(200).json({ message: "Book is deleted successfully" });
+    res
+      .status(HttpStatusCodes.OK)
+      .json({ message: "Book is deleted successfully" });
   }
 );

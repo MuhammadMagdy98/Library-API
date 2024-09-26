@@ -9,6 +9,7 @@ class BorrowingProcess extends Model {
   public bookId!: number;
   public checkoutDate!: Date;
   public dueDate!: Date;
+  public returnedAt!: Date;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -45,16 +46,20 @@ BorrowingProcess.init(
       type: DataTypes.DATE,
       allowNull: false,
     },
+    returnedAt: {
+      type: DataTypes.DATE,
+    },
   },
   {
     sequelize,
     tableName: "borrowing_processes",
+    timestamps: true,
   }
 );
 
 Book.hasMany(BorrowingProcess, { foreignKey: "bookId" });
-User.hasMany(BorrowingProcess, { foreignKey: "userId" });
+User.hasMany(BorrowingProcess, { foreignKey: "borrowerId" });
 BorrowingProcess.belongsTo(Book, { foreignKey: "bookId" });
-BorrowingProcess.belongsTo(User, { foreignKey: "userId" });
+BorrowingProcess.belongsTo(User, { foreignKey: "borrowerId" });
 
 export default BorrowingProcess;

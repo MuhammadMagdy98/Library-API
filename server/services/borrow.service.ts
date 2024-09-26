@@ -11,10 +11,7 @@ export const addBorrowerService = async (borrowDetails: BorrowerAttributes) => {
     password: hashedPassword,
   });
   if (!borrower) {
-    throw new ApiError(
-      HttpStatusCodes.CONFLICT.valueOf(),
-      "The email already exists"
-    );
+    throw new ApiError(HttpStatusCodes.CONFLICT, "The email already exists");
   }
   return borrower;
 };

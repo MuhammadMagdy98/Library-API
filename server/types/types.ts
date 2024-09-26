@@ -17,9 +17,17 @@ export interface UpdateBorrowerAttributes {
 }
 
 export interface BookAttributes {
+  id: number;
   title: string;
   author: string;
   isbn: string;
   availableQuantity?: number; // optional, since it defaults to 1
   shelfLocation: string;
+  updatedAt: Date;
+}
+
+export interface BorrowingProccessAttributes {
+  bookId: number;
+  borrowerId: number;
+  dueDate: Date;
 }

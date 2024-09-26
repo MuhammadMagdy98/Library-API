@@ -34,12 +34,13 @@ User.init(
     role: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: "user",
+      defaultValue: "borrower",
     },
   },
   {
     sequelize,
     tableName: "users",
+    timestamps: true,
   }
 );
 

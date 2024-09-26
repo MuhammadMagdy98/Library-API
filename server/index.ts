@@ -1,4 +1,5 @@
 import express from "express";
+import rateLimit from "express-rate-limit";
 import env from "./config/env";
 import { connectDB } from "./config/db";
 import logger from "./config/logger";
@@ -8,16 +9,25 @@ import BorrowingProcess from "./model/BorrowingProcess";
 import initializeAdminEmails from "./config/init.admin";
 import borrowRoutes from "./routes/borrow.routes";
 import authRoutes from "./routes/auth.routes";
+import bookRoutes from "./routes/book.routes";
+import borrowingRoutes from "./routes/borrowing.routes";
 import { errorConverter, errorHandler } from "./middlewares/error";
 import InitializationFlag from "./model/InitializationFlag";
+import API_URLS from "./constants/urls";
+import { FIFTEEN_MINUTES, MAX_REQUESTS } from "./constants/utils";
+import { createRateLimiter } from "./utils/rateLimiter";
 const app = express();
 
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
+app.use(API_URLS.GET_BOOKS, createRateLimiter(60 * 1000, 10));
+app.use(API_URLS.SEARCH_BOOKS, createRateLimiter(FIFTEEN_MINUTES, 10));
 app.use(borrowRoutes);
 app.use(authRoutes);
+app.use(bookRoutes);
+app.use(borrowingRoutes);
 
 const startServer = async () => {
   try {

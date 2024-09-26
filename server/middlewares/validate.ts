@@ -4,7 +4,10 @@ import HttpsStatusCodes from "http-status-codes";
 
 export const validate =
   (schema: Schema) => (req: Request, res: Response, next: NextFunction) => {
-    const { error } = schema.validate(req.body);
+    let { error } = schema.validate(req.body);
+    if (req.params?.id) {
+      error = schema.validate(req.params).error;
+    }
     if (error) {
       return res
         .status(HttpsStatusCodes.UNPROCESSABLE_ENTITY)

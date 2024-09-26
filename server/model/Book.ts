@@ -8,9 +8,6 @@ class Book extends Model {
   public isbn!: string;
   public availableQuantity!: number;
   public shelfLocation!: string;
-
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
 }
 
 Book.init(
@@ -46,6 +43,21 @@ Book.init(
   {
     sequelize,
     tableName: "books",
+    timestamps: true,
+    indexes: [
+      {
+        unique: false,
+        fields: ["title"],
+      },
+      {
+        unique: false,
+        fields: ["author"],
+      },
+      {
+        unique: true,
+        fields: ["isbn"],
+      },
+    ],
   }
 );
 

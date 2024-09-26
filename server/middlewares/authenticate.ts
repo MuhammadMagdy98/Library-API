@@ -1,13 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import HttpStatusCodes from "http-status-codes";
-import ApiError from "../utils/ApiError";
 import { verifyToken } from "../utils/jwt.util";
-import env from "../config/env";
 import catchAsync from "../utils/catchAsync";
-
-export const adminAuth = catchAsync(
-  async (req: Request, res: Response, next: NextFunction) => {
+import ApiError from "../utils/ApiError";
+import User from "../model/User";
+export const authenticate = catchAsync(
+  async (req: any, res: Response, next: NextFunction) => {
     const token = req.headers.authorization?.split(" ")[1];
+
     if (!token) {
       throw new ApiError(
         HttpStatusCodes.UNAUTHORIZED,
@@ -15,12 +15,18 @@ export const adminAuth = catchAsync(
       );
     }
 
-    const decoded = verifyToken(token);
-
+    const decoded: any = verifyToken(token);
     if (!decoded) {
       throw new ApiError(HttpStatusCodes.FORBIDDEN, "Access denied");
     }
-    if (decoded && (decoded as any).role !== "admin") {
+
+    const exists = await User.findByPk(decoded.id);
+    if (!exists) {
+      throw new ApiError(HttpStatusCodes.FORBIDDEN, "Access denied");
+    }
+    req.user = { id: decoded.id, role: decoded.role };
+
+    if (decoded && decoded.role !== "admin" && decoded.role !== "borrower") {
       throw new ApiError(HttpStatusCodes.FORBIDDEN, "Access denied");
     }
 

@@ -12,7 +12,7 @@ export const loginService = async (loginDetails: LoginAttributes) => {
 
   if (!user) {
     throw new ApiError(
-      HttpStatusCodes.UNAUTHORIZED.valueOf(),
+      HttpStatusCodes.UNAUTHORIZED,
       "Invalid email or password"
     );
   }
@@ -23,7 +23,7 @@ export const loginService = async (loginDetails: LoginAttributes) => {
   );
   if (!isPasswordValid) {
     throw new ApiError(
-      HttpStatusCodes.UNAUTHORIZED.valueOf(),
+      HttpStatusCodes.UNAUTHORIZED,
       "Invalid email or password"
     );
   }
