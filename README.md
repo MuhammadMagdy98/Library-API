@@ -326,6 +326,29 @@ Get borrowed books.
 ]
 ```
 
+**GET** `api/v1/borrowers/overtime`
+
+Get overtime borrowed books.
+
+**Authorization**: Bearer Token
+
+**Response:**
+
+```json
+{
+    "message": "Overdue books retrieved successfully",
+    "data": [
+        {
+        "bookId": 1,
+        "title": "The Secret World",
+        ...
+        },
+    ...
+      ]
+}
+
+```
+
 ### Analytics
 
 **GET** `/api/v1/analytics/export?startDate={startDate}&endDate={endDate}`
