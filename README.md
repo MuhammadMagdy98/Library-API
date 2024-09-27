@@ -339,6 +339,10 @@ Make sure to set the following environment variables in your `.env` file:
 - `PORT`: The port on which the server will run (default is `3000`).
 - `ADMIN_EMAIL`: The email address of the admin user.
 - `ADMIN_PASSWORD`: The password for the admin user.
+- `DB_NAME`: The name of the database.
+- `DB_USERNAME`: The username of the database.
+- `DB_PASSWORD`: The password of the database.
+- `DB_PORT`: The port the database is running on.
 
 ### Example `.env.example`
 
@@ -348,4 +352,8 @@ JWT_SECRET=mysecretkey
 PORT=3000
 ADMIN_EMAIL=admin@example.com
 ADMIN_PASSWORD=adminpassword
+DB_NAME=bosta-library
+DB_USERNAME=postgres
+DB_PASSWORD=db_password
+DB_PORT=5432
 ```
