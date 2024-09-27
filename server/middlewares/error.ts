@@ -6,6 +6,7 @@ import logger from "../config/logger";
 import env from "../config/env";
 import { JsonWebTokenError } from "jsonwebtoken";
 
+// convert the errors thrown by other libraries to a more readable error
 export const errorConverter = (
   err: any,
   req: Request,

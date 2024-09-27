@@ -22,11 +22,14 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
+// limit to 100 requests in 15 minuutes
 app.use(API_URLS.GET_BOOKS, createRateLimiter(FIFTEEN_MINUTES, MAX_REQUESTS));
 app.use(
   API_URLS.SEARCH_BOOKS,
   createRateLimiter(FIFTEEN_MINUTES, MAX_REQUESTS)
 );
+
+// all the routes
 app.use(borrowRoutes);
 app.use(authRoutes);
 app.use(bookRoutes);
