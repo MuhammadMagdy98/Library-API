@@ -36,6 +36,11 @@ This Library Management System API allows users to manage books and borrowers in
    npm start
    ```
 
+## Database Schema Diagram 
+![Untitled](https://github.com/user-attachments/assets/a0c9a22a-1a8e-4020-8b39-4519df457694)
+
+
+
 ## API Endpoints
 
 ### Authentication
@@ -47,8 +52,8 @@ Login to the system.
 
 ```json
 {
-    "email": "lukecholes@gmail.com",
-    "password": "xMido123123"
+    "email": "email@email.com",
+    "password": "password123"
 }
 ```
 
@@ -66,14 +71,15 @@ Login to the system.
 **POST** `/api/v1/borrowers/add`
 Add a new borrower.
 
-**Authorization**: Bearer Token
+**Authorization**: Bearer Token (admin only)
+
 **Request Body:**
 
 ```json
 {
-    "email": "lukecholes1@gmail.com",
-    "password": "xMido123123",
-    "name": "Magdy"
+    "email": "email@email.com",
+    "password": "password123",
+    "name": "Migo"
 }
 ```
 
@@ -90,14 +96,15 @@ Add a new borrower.
 **DELETE** `/api/v1/borrowers/delete/{id}`
 Delete a borrower by ID.
 
-**Authorization**: Bearer Token
+**Authorization**: Bearer Token (admin only)
+
 **Request Body:**
 
 ```json
 {
-    "email": "lukecholes@gmail.com",
-    "password": "xMido123123",
-    "name": "Magdy"
+    "email": "email@email.com",
+    "password": "password123",
+    "name": "Migo"
 }
 ```
 
@@ -114,15 +121,16 @@ Delete a borrower by ID.
 **PUT** `/api/v1/borrowers/update`
 Update borrower information.
 
-**Authorization**: Bearer Token
+**Authorization**: Bearer Token (admin only)
+
 **Request Body:**
 
 ```json
 {
     "id": 2,
-    "email": "lukecholes@gmail.com",
-    "password": "xMido123123",
-    "name": "Magdy"
+    "email": "email@email.com",
+    "password": "password123",
+    "name": "Migo"
 }
 ```
 
@@ -139,7 +147,8 @@ Update borrower information.
 **POST** `/api/v1/books/add`
 Add a new book.
 
-**Authorization**: Bearer Token
+**Authorization**: Bearer Token (admin only)
+
 **Request Body:**
 
 ```json
@@ -165,7 +174,7 @@ Add a new book.
 **GET** `/api/v1/books`
 Retrieve a list of all books.
 
-**Authorization**: Bearer Token
+**Authorization**: Bearer Token (admin only)
 
 **Response:**
 
@@ -188,7 +197,7 @@ Retrieve a list of all books.
 **DELETE** `/api/v1/books/delete/{id}`
 Delete a book by ID.
 
-**Authorization**: Bearer Token
+**Authorization**: Bearer Token (admin only)
 
 **Response:**
 
@@ -203,7 +212,7 @@ Delete a book by ID.
 **PUT** `/api/v1/books/update`
 Update book information.
 
-**Authorization**: Bearer Token
+**Authorization**: Bearer Token (admin only)
 **Request Body:**
 
 ```json
@@ -226,12 +235,15 @@ Update book information.
 ---
 
 **GET** `/api/v1/books/search?title={title}&author={author}`
-Search for books by title and author.
+Search for books by title, author or isbn.
 
-**Authorization**: Bearer Token**Query Parameters:**
+**Authorization**: Bearer Token (admin only)
+
+**Query Parameters:**
 
 - `title`: The title of the book
 - `author`: The author of the book
+- `isbn`: The isbn of the book
 
 **Response:**
 
@@ -253,6 +265,7 @@ Search for books by title and author.
 Check out a book.
 
 **Authorization**: Bearer Token
+
 **Request Body:**
 
 ```json
@@ -276,6 +289,7 @@ Check out a book.
 Return a checked-out book.
 
 **Authorization**: Bearer Token
+
 **Request Body:**
 
 ```json
@@ -312,12 +326,37 @@ Get borrowed books.
 ]
 ```
 
+**GET** `api/v1/borrowers/overtime`
+
+Get overtime borrowed books.
+
+**Authorization**: Bearer Token
+
+**Response:**
+
+```json
+{
+    "message": "Overdue books retrieved successfully",
+    "data": [
+        {
+        "bookId": 1,
+        "title": "The Secret World",
+        ...
+        },
+    ...
+      ]
+}
+
+```
+
 ### Analytics
 
 **GET** `/api/v1/analytics/export?startDate={startDate}&endDate={endDate}`
 Get analytics data.
 
-**Authorization**: Bearer Token**Query Parameters:**
+**Authorization**: Bearer Token (admin only)
+
+**Query Parameters:** (you can pass any of startDate or endDate or neither)
 
 - `startDate`: The start date for the analytics (format: YYYY-MM-DD)
 - `endDate`: The end date for the analytics (format: YYYY-MM-DD)
@@ -339,6 +378,10 @@ Make sure to set the following environment variables in your `.env` file:
 - `PORT`: The port on which the server will run (default is `3000`).
 - `ADMIN_EMAIL`: The email address of the admin user.
 - `ADMIN_PASSWORD`: The password for the admin user.
+- `DB_NAME`: The name of the database.
+- `DB_USERNAME`: The username of the database.
+- `DB_PASSWORD`: The password of the database.
+- `DB_PORT`: The port the database is running on.
 
 ### Example `.env.example`
 
@@ -348,4 +391,8 @@ JWT_SECRET=mysecretkey
 PORT=3000
 ADMIN_EMAIL=admin@example.com
 ADMIN_PASSWORD=adminpassword
+DB_NAME=bosta-library
+DB_USERNAME=postgres
+DB_PASSWORD=db_password
+DB_PORT=5432
 ```
