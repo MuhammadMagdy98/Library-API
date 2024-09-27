@@ -5,7 +5,7 @@
 This Library Management System API allows users to manage books and borrowers in a library. Users can log in, add and update borrowers and books, check out and return books, and retrieve analytics.
 
 ## Table of Contents
-
+- [Prerequisites](#prerequisite)
 - [Installation](#installation)
 - [API Endpoints](#api-endpoints)
   - [Authentication](#authentication)
@@ -14,7 +14,15 @@ This Library Management System API allows users to manage books and borrowers in
   - [Checkout and Return](#checkout-and-return)
   - [Analytics](#analytics)
 - [Environment Variables](#environment-variables)
-- [License](#license)
+
+## Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+
+- **Node.js**: Install Node.js (version 14.x or higher recommended). You can download it from the [official website](https://nodejs.org/).
+- **npm**: npm comes bundled with Node.js. Ensure it's up to date by running `npm install -g npm@latest`.
+- **PostgreSQL**: Install PostgreSQL (version 12.x or higher recommended). Download it from the [official website](https://www.postgresql.org/).
+- **Git**: You need Git to clone the repository. Get it from [here](https://git-scm.com/downloads).
 
 ## Installation
 
