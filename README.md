@@ -35,6 +35,11 @@ This Library Management System API allows users to manage books and borrowers in
    ```bash
    npm start
    ```
+5. **Run the tests**:
+
+    ```bash
+    npm test
+    ```
 
 ## Database Schema Diagram 
 ![Untitled](https://github.com/user-attachments/assets/a0c9a22a-1a8e-4020-8b39-4519df457694)
