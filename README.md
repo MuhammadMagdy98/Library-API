@@ -52,8 +52,8 @@ Login to the system.
 
 ```json
 {
-    "email": "lukecholes@gmail.com",
-    "password": "xMido123123"
+    "email": "email@email.com",
+    "password": "password123"
 }
 ```
 
@@ -77,9 +77,9 @@ Add a new borrower.
 
 ```json
 {
-    "email": "lukecholes1@gmail.com",
-    "password": "xMido123123",
-    "name": "Magdy"
+    "email": "email@email.com",
+    "password": "password123",
+    "name": "Migo"
 }
 ```
 
@@ -102,9 +102,9 @@ Delete a borrower by ID.
 
 ```json
 {
-    "email": "lukecholes@gmail.com",
-    "password": "xMido123123",
-    "name": "Magdy"
+    "email": "email@email.com",
+    "password": "password123",
+    "name": "Migo"
 }
 ```
 
@@ -128,9 +128,9 @@ Update borrower information.
 ```json
 {
     "id": 2,
-    "email": "lukecholes@gmail.com",
-    "password": "xMido123123",
-    "name": "Magdy"
+    "email": "email@email.com",
+    "password": "password123",
+    "name": "Migo"
 }
 ```
 
