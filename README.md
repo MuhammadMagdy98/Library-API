@@ -111,15 +111,6 @@ Delete a borrower by ID.
 
 **Authorization**: Bearer Token (admin only)
 
-**Request Body:**
-
-```json
-{
-    "email": "email@email.com",
-    "password": "password123",
-    "name": "Migo"
-}
-```
 
 **Response:**
 
