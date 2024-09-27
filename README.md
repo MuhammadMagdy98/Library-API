@@ -66,7 +66,8 @@ Login to the system.
 **POST** `/api/v1/borrowers/add`
 Add a new borrower.
 
-**Authorization**: Bearer Token
+**Authorization**: Bearer Token (admin only)
+
 **Request Body:**
 
 ```json
@@ -90,7 +91,8 @@ Add a new borrower.
 **DELETE** `/api/v1/borrowers/delete/{id}`
 Delete a borrower by ID.
 
-**Authorization**: Bearer Token
+**Authorization**: Bearer Token (admin only)
+
 **Request Body:**
 
 ```json
@@ -114,7 +116,8 @@ Delete a borrower by ID.
 **PUT** `/api/v1/borrowers/update`
 Update borrower information.
 
-**Authorization**: Bearer Token
+**Authorization**: Bearer Token (admin only)
+
 **Request Body:**
 
 ```json
@@ -139,7 +142,8 @@ Update borrower information.
 **POST** `/api/v1/books/add`
 Add a new book.
 
-**Authorization**: Bearer Token
+**Authorization**: Bearer Token (admin only)
+
 **Request Body:**
 
 ```json
@@ -165,7 +169,7 @@ Add a new book.
 **GET** `/api/v1/books`
 Retrieve a list of all books.
 
-**Authorization**: Bearer Token
+**Authorization**: Bearer Token (admin only)
 
 **Response:**
 
@@ -188,7 +192,7 @@ Retrieve a list of all books.
 **DELETE** `/api/v1/books/delete/{id}`
 Delete a book by ID.
 
-**Authorization**: Bearer Token
+**Authorization**: Bearer Token (admin only)
 
 **Response:**
 
@@ -203,7 +207,7 @@ Delete a book by ID.
 **PUT** `/api/v1/books/update`
 Update book information.
 
-**Authorization**: Bearer Token
+**Authorization**: Bearer Token (admin only)
 **Request Body:**
 
 ```json
@@ -228,10 +232,13 @@ Update book information.
 **GET** `/api/v1/books/search?title={title}&author={author}`
 Search for books by title and author.
 
-**Authorization**: Bearer Token**Query Parameters:**
+**Authorization**: Bearer Token (admin only)
+
+**Query Parameters:**
 
 - `title`: The title of the book
 - `author`: The author of the book
+- `isbn`: The isbn of the book
 
 **Response:**
 
@@ -253,6 +260,7 @@ Search for books by title and author.
 Check out a book.
 
 **Authorization**: Bearer Token
+
 **Request Body:**
 
 ```json
@@ -276,6 +284,7 @@ Check out a book.
 Return a checked-out book.
 
 **Authorization**: Bearer Token
+
 **Request Body:**
 
 ```json
@@ -317,7 +326,9 @@ Get borrowed books.
 **GET** `/api/v1/analytics/export?startDate={startDate}&endDate={endDate}`
 Get analytics data.
 
-**Authorization**: Bearer Token**Query Parameters:**
+**Authorization**: Bearer Token (admin only)
+
+**Query Parameters:** (you can pass any of startDate or endDate or neither)
 
 - `startDate`: The start date for the analytics (format: YYYY-MM-DD)
 - `endDate`: The end date for the analytics (format: YYYY-MM-DD)
