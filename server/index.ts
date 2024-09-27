@@ -1,5 +1,4 @@
 import express from "express";
-import rateLimit from "express-rate-limit";
 import env from "./config/env";
 import { connectDB } from "./config/db";
 import logger from "./config/logger";
@@ -56,3 +55,5 @@ startServer();
 app.use(errorConverter);
 
 app.use(errorHandler);
+
+export default app; // for testing
