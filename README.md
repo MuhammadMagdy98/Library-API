@@ -217,6 +217,7 @@ Delete a book by ID.
 Update book information.
 
 **Authorization**: Bearer Token (admin only)
+
 **Request Body:**
 
 ```json
