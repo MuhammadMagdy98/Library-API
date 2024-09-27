@@ -235,7 +235,7 @@ Update book information.
 ---
 
 **GET** `/api/v1/books/search?title={title}&author={author}`
-Search for books by title and author.
+Search for books by title, author or isbn.
 
 **Authorization**: Bearer Token (admin only)
 
